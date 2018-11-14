@@ -82,6 +82,16 @@ function handleProps(props, element) {
   }
 }
 
-export function render(vNode, node) {
-  node.appendChild(renderNode(vNode))
+let currentApp
+
+function render(element, rootElement) {
+  const app = renderNode(element)
+
+  currentApp ?
+    rootElement.replaceChild(app, currentApp) :
+    rootElement.appendChild(app)
+
+  currentApp = app
 }
+
+export default { render }
