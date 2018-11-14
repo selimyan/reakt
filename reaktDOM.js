@@ -1,14 +1,12 @@
 function diff(vNode, node) {
-  const hasNewChildren = vNode.children.length > node.childNodes.length
+  const hasNewChildren = vNode.children.length !== node.childNodes.length
 
   if (hasNewChildren) {
-    node.parentNode.appendChild(
+    node.appendChild(
       renderNode(vNode.chidlren[vNode.chidlren.length - 1])
     )
-    return node
-  } else {
-    return node
   }
+  return node
 }
 
 function updater(component) {

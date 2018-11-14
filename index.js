@@ -1,21 +1,21 @@
-import { createElement, Component } from './reakt.js'
-import { render } from './reaktDom.js'
+import Reakt, { Component } from './reakt.js'
+import ReaktDOM from './reaktDom.js'
 
 class List extends Component {
 
   constructor() {
     super()
-    this.state = { items: ['Gayane'] }
+    this.state = { items: [] }
 
     setInterval(() => {
       this.setState({
-        items: [...this.state.items, 'New name']
+        items: [...this.state.items, 'Hii']
       })
     }, 2000)
   }
 
   render() {
-    return createElement(
+    return Reakt.createElement(
       'ul',
       null,
       ...this.state.items.map(
@@ -25,27 +25,16 @@ class List extends Component {
   }
 }
 
-const Title = (props) => {
-  return createElement(
-    'h1',
-    {
-      style: 'color: red',
-      onClick: () => alert('A Title'),
-      innerHTML: props.title
-    },
-    props.title
-  )
-}
-
-const App = createElement(
-  'div',
-  null,
-  createElement(Title, { title: 'Hello Reakt' }
+const App = () => (
+  Reakt.createElement(
+    'div',
+    null,
+    Reakt.createElement('h1', null, 'Hello'),
+    Reakt.createElement(List)
   )
 )
 
-// const Title = createElement('h1', {}, 'Hello Reakt')
-
-render(
-  createElement(App, null),
-  document.getElementById('app'))
+ReaktDOM.render(
+  Reakt.createElement(App, null),
+  document.getElementById('app')
+)

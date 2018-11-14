@@ -1,16 +1,20 @@
+// base class
 export class Component {
 
-  constructor(updater) {
-    this.state = {}
+  constructor(props, updater) {
+    this.props = props
     this.updater = updater
   }
 
-  setState(partialState) {
-    Object.assign(this.state, partialState)
+  setState(state) {
+    this.state = Object.assign(this.state, state)
     this.updater(this)
   }
 }
 
-export function createElement(type, props, ...children) {
-  return { type, props, children }
+// return a 'virtual DOM node'
+function createElement(nodeName, props, ...children) {
+  return { nodeName, props, children }
 }
+
+export default { createElement }
