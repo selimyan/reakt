@@ -33,12 +33,18 @@ function renderNode(vNode) {
     return element
   }
 
+  // functional component
   if (typeof (type) === 'function') {
-    return renderNode(type(props))
+    return renderNode(nodeName(props))
   }
 
-  if (typeof (type) === 'string') {
+  // string
+  if (typeof (nodeName) === 'string') {
     const element = document.createElement(nodeName)
+
+    handleProps(props, element)
+    handleChildren(children, element)
+
     return element
   }
 
