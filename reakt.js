@@ -4,7 +4,10 @@ import { render } from './reaktDom.js'
 const Title = (props) => {
   return createElement(
     'h1',
-    null,
+    {
+      style: 'color: red',
+      onClick: () => alert('A Title')
+    },
     props.title
   )
 }
@@ -18,6 +21,6 @@ const App = createElement(
   )
 )
 
-const Title = createElement('h1', {}, 'Hello Reakt')
+// const Title = createElement('h1', {}, 'Hello Reakt')
 
 render(Title, document.body)

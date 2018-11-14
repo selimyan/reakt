@@ -16,8 +16,25 @@ function renderNode(vNode) {
     } else {
       element.appendChild(renderNode(child));
     }
-  });
-  //do things
+  })
+
+  //handle props
+  for (let prop in props) {
+    if (/^on/.test(prop)) {
+      const eventName = prop.slice(2).toLowerCase()
+      element.addEventListener(eventName, props[prop])
+      console.log('event')
+    }
+
+    else if (prop in element) {
+      element[props] = props[prop]
+    }
+
+    else {
+      element.setAttribute(prop, props[prop])
+    }
+  }
+
   element.appendChild(document.createTextNode(children[0]))
 
   return element
