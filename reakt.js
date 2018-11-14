@@ -1,11 +1,13 @@
 export class Component {
 
-  constructor() {
+  constructor(updater) {
     this.state = {}
+    this.updater = updater
   }
 
   setState(partialState) {
     Object.assign(this.state, partialState)
+    this.updater(this)
   }
 }
 

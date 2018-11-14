@@ -1,9 +1,36 @@
+function diff(vNode, node) {
+  const hasNewChildren = vNode.children.length > node.childNodes.length
+
+  if (hasNewChildren) {
+    node.parentNode.appendChild(
+      renderNode(vNode.chidlren[vNode.chidlren.length - 1])
+    )
+    return node
+  } else {
+    return node
+  }
+}
+
+function updater(component) {
+  const vNode = component.render()
+  const node = component.base
+
+  component.base = diff(vNode, node)
+}
+
 function renderNode(vNode) {
   const { type, props, children } = vNode
 
   if (typeof (type) === 'function' && /^class/.test(type.toString())) {
+
+    // component instance
     const instance = new type()
-    return renderNode(instance.render())
+    Object.assign(instance, { updater })
+
+    const element = renderNode(instance.render())
+    instance.base = element
+
+    return element
   }
 
   if (typeof (type) === 'function') {
@@ -12,6 +39,7 @@ function renderNode(vNode) {
 
   if (typeof (type) === 'string') {
     const element = document.createElement(type)
+    return element
   }
 
   //handle children

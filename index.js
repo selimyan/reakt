@@ -1,15 +1,15 @@
 import { createElement, Component } from './reakt.js'
 import { render } from './reaktDom.js'
 
-
 class List extends Component {
 
   constructor() {
+    super()
     this.state = { items: ['Gayane'] }
 
     setInterval(() => {
       this.setState({
-        items: [... this.state.items, 'New name']
+        items: [...this.state.items, 'New name']
       })
     }, 2000)
   }
@@ -40,12 +40,12 @@ const Title = (props) => {
 const App = createElement(
   'div',
   null,
-  createElement(
-    Title,
-    { title: 'Hello Reakt' }
+  createElement(Title, { title: 'Hello Reakt' }
   )
 )
 
 // const Title = createElement('h1', {}, 'Hello Reakt')
 
-render(App, document.body)
+render(
+  createElement(App, null),
+  document.getElementById('app'))
