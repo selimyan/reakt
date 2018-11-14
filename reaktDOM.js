@@ -10,23 +10,25 @@ function diff(vNode, node) {
 }
 
 function updater(component) {
+  const oldBase = component.base
   const vNode = component.render()
-  const node = component.base
 
-  component.base = diff(vNode, node)
+  component.base = diff(vNode, oldBase)
 }
 
+// create DOM from virtual nodes
 function renderNode(vNode) {
-  const { type, props, children } = vNode
+  const { nodeName, props, children } = vNode
 
-  if (typeof (type) === 'function' && /^class/.test(type.toString())) {
+  // class
+  if (typeof (nodeName) === 'function' && /^class/.test(nodeName.toString())) {
 
     // component instance
-    const instance = new type()
-    Object.assign(instance, { updater })
+    const component = new nodeName(props)
+    Object.assign(component, { updater })
 
-    const element = renderNode(instance.render())
-    instance.base = element
+    const element = renderNode(component.render())
+    component.base = element
 
     return element
   }
@@ -36,7 +38,7 @@ function renderNode(vNode) {
   }
 
   if (typeof (type) === 'string') {
-    const element = document.createElement(type)
+    const element = document.createElement(nodeName)
     return element
   }
 
